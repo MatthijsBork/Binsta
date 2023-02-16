@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../public/style/app.css">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/dark.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+		<script src="https://kit.fontawesome.com/5ec69f4c13.js" crossorigin="anonymous"></script>
+		<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+		<script>
+			hljs.initHighlightingOnLoad();
+		</script>
+
+		{% block head %}
+			<title>App</title>
+		{% endblock %}
+	</head>
+	<body class="pb-5 bg-light d-flex flex-column">
+		<header class="shadow bg-bit d-flex flex-start fs-4 shadow justify-content-between">
+			<ul class="d-flex m-3 flex-row justify-content-md-evenly list-unstyled">
+				<li class="px-2">
+					<a class="text-decoration-none text-white" href="/">Binsta</a>
+				</li>
+			</ul>
+			<ul class="m-auto">
+				<form action="/user/search" method="POST" class="input-group">
+					<div class="form-outline">
+						<input name="search" type="search" placeholder="Search a user" class="form-control"/>
+					</div>
+					<button type="submit" class="btn btn-primary">
+						<i class="fas fa-search"></i>
+					</button>
+				</form>
+			</ul>
+			<ul class="d-flex mx-3 my-auto gap-3 flex-row justify-content-evenly list-unstyled">
+				{% if session.user %}
+					<li class="m-auto d-flex justify-content-evenly">
+						<a class="text-decoration-none d-none d-xl-inline" href="/">
+							<i class="px-2 m-auto fa-sharp text-white fa-solid fa-house"></i>
+						</a>
+						<a href="/posts/create">
+							<i class="d-none d-lg-inline px-2 m-auto fa-regular fa-square-plus fa-lg text-white"></i>
+						</a>
+					</li>
+					<li class="m-auto">
+						<a type="button" class="text-white dropdown-toggle text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+							<img class="img-fluid rounded-circle" style="width: 3rem;" src="../public/images/users/{{ user.image_name }}" alt="">
+						</a>
+
+						<ul class="striped-menu dropdown-menu col-12 col-lg-1 fs-5 animate slideIn">
+							<li>
+								<a class="py-3 py-lg-0 dropdown-item" href="/user/show?param={{ session.user.id }}">Profile</a>
+							</li>
+							<li>
+								<a class="py-3 py-lg-0 dropdown-item" href="/posts/create">New Post</a>
+							</li>
+							<li>
+								<a class="py-3 py-lg-0 dropdown-item" href="/user/edit">Edit Profile</a>
+							</li>
+							<li>
+								<a class="py-3 py-lg-0 dropdown-item" href="/user/logout">Logout</a>
+							</li>
+						</ul>
+					</li>
+				{% else %}
+					<li>
+						<a href="/user/login" class="btn btn-primary">
+							Login
+						</a>
+					</li>
+					<li>
+						<a href="/user/register" class="px-2 btn btn-primary">
+							Register
+						</a>
+					</li>
+				{% endif %}
+			</ul>
+		</header>
+		<main class=""> {% block main %}{% endblock %}
+
+			</main>
+			<div class="my-5 my-lg-0"></div>
+			<footer class="position-fixed border-0 d-lg-none mt-5 bg-light text-dark shadow text-center text-lg-start" style="bottom: 0; left: 0; width: 100%">
+				<div class="fs-5 d-flex justify-content-evenly py-4">
+					<a href="/">
+						<i class="px-2 m-auto fa-sharp fa-solid fa-house text-dark fa-xl"></i>
+					</a>
+					<a type="button" class="btn dropdown-toggle">
+						<i class="fa-solid fa-magnifying-glass text-dark fa-xl"></i>
+					</a>
+					<a href="/posts/create">
+						<i class="px-2 m-auto fa-regular fa-square-plus text-dark fa-xl"></i>
+					</a>
+				</div>
+			</footer>
+		</body>
+	</html>

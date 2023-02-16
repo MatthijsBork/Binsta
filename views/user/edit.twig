@@ -1,0 +1,60 @@
+{% extends 'layouts/app.twig' %}
+
+{% block head %}
+	<title>Binsta - Edit Profile</title>
+{% endblock %}
+
+{% block main %}
+	<div class="container px-4 mt-4 d-flex flex-column align-items-center">
+		<div>
+			<div class="card mb-4">
+				<div class="card-header">Account Details</div>
+				<div class="card-body">
+					<form action="/user/editpost" method="POST" enctype="multipart/form-data">
+						<div class="col">
+							<div class="card mb-4">
+								<div class="card-header">Profile Picture</div>
+								<div class="card-body text-center">
+								<div class="rounded-circle overflow-hidden" style="width: 20vw; height:20vw;">
+									<img class="" src="../public/images/users/{{user.image_name}}" alt="">
+								</div>
+									<div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+									<input name="profile_image" type="file" id="image" src="">
+								</div>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label class="small mb-1" for="username">Username</label>
+							<input name="username" class="form-control" id="username" type="text" placeholder="Enter your username" value="{{user.username}}">
+						</div>
+						<div class="row gx-3 mb-3">
+							<div class="col-md-6">
+								<label class="small mb-1" for="new_password">New Password (optional)</label>
+								<input name="new_password" class="form-control" id="new_password" type="password" placeholder="New password">
+							</div>
+							<div class="col-md-6">
+								<label class="small mb-1" for="password_confirm">New Password confirm</label>
+								<input name="password_confirm" class="form-control" id="password_confirm" type="password" placeholder="New password">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<label class="small mb-1" for="bio">Bio</label>
+							<textarea name="biography" class="form-control" id="bio" type="textarea" placeholder="Biography">{{user.biography}}</textarea>
+						</div>
+						<div class="col-md-6 mb-3">
+							<label class="small mb-1" for="password">To save changes, enter your current password</label>
+							<input name="password" class="form-control" id="password" type="password" placeholder="Password" required>
+						</div>
+						<input class="btn btn-primary" type="submit" value="Save changes">
+					</form>
+					{% if session.message is defined %}
+						<div class="mt-5 alert alert-{{session.message.type}}" role="alert">
+							{{ session.message.msg }}
+						</div>
+					{% endif %}
+
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

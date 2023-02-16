@@ -1,0 +1,22 @@
+{% extends 'layouts/app.twig' %}
+
+{% block head %}
+	<title>Search results</title>
+{% endblock %}
+
+{% block main %}
+	<div class="container px-4 mt-4 d-flex flex-column align-items-center">
+
+		{% for user in vars %}
+			<div class="col-12 col-lg-8 card mb-5 border-1 rounded-3 shadow border-0">
+				<div class="card-header d-flex flex-row gap-3">
+					<div class="rounded-circle overflow-hidden">
+						<img style="width:3rem" src="../public/images/users/{{user.image_name}}" alt=""></div>
+					<a class="my-auto text-decoration-none text-reset" href="/user/show?param={{user.id}}">
+						<b>{{user.username}}</b>
+					</a>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+</div>{% endblock %}

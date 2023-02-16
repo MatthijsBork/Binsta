@@ -1,0 +1,54 @@
+{% extends 'layouts/app.twig' %}
+
+{% block head %}
+	<title>Posts</title>
+{% endblock %}
+
+{% block main %}
+	<div class="container px-4 mt-4 d-flex flex-column align-items-center">
+
+		{% for post in vars.posts %}
+			<div class="col-12 col-lg-8 card mb-5 border-1 rounded-3 shadow border-0">
+				<div class="card-header d-flex flex-row gap-3">
+					<div class="rounded-circle overflow-hidden">
+						<img style="width:3rem" src="../public/images/users/{{post.user.image_name}}" alt=""></div>
+					<a class="my-auto text-decoration-none text-reset" href="/user/show?param={{post.user.id}}">
+						<b>{{post.user.username}}</b>
+					</a>
+				</div>
+				<div class="card-body p-0">
+					<pre><code class="{{post.language}}">{{post.snippet}}</code></pre>
+					<div class="card-text m-2 d-flex flex-column">
+						<div class="text-break mx-2 mw-100">
+							{{post.caption}}
+						</div>
+					</div>
+					<hr>
+					<div class="d-flex justify-content-between px-5">
+						{% if post.liked %}
+							<a class="text-reset" href="/posts/unlike?param={{post.id}}">
+								<i class="text-red fa-solid fa-heart"></i>
+							</a>
+						{% else %}
+							<a class="text-reset" href="/posts/like?param={{post.id}}">
+								<i class="fa-regular fa-heart"></i>
+							</a>
+						{% endif %}
+						<a class="text-reset" href="/posts/show?param={{post.id}}">
+							<i class="fa-solid fa-comments"></i>
+						</a>
+						<a class="text-reset" href="#">
+							<i class="fa-solid fa-share"></i>
+						</a>
+					</div>
+					<hr>
+					<form class="d-flex flex-row" method="POST" action="/posts/commentpost">
+						<input required class="shadow-none form-control border-0" name="comment" placeholder="Place a comment" style="width: 90%;" type="text">
+						<input class="form-control border-0 bg-white text-primary" value="Place" type="submit" style="width: 10%;">
+						<input type="hidden" name="post_id" value="{{post.id}}">
+					</form>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

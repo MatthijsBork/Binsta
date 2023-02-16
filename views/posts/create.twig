@@ -1,0 +1,49 @@
+{% extends 'layouts/app.twig' %}
+
+{% block head %}
+	<title>Binsta - Create Post</title>
+{% endblock %}
+
+{% block main %}
+	<div class="container px-4 mt-4 d-flex flex-column align-items-center">
+		<div>
+			<div class="card mb-4">
+				<div class="card-header">New post</div>
+				<div class="card-body">
+					<form action="/posts/createpost" method="POST" enctype="multipart/form-data">
+						<div class="mb-3">
+							<label class="small mb-1" for="snippet">Code</label>
+							<textarea class="form-control" name="snippet" id="snippet" cols="300" rows="10" placeholder="Your code snippet here" required></textarea>
+						</div>
+						<div class="row">
+
+							<div class="mb-3 col-md-6">
+								<label class="small mb-4" for="caption">Caption</label>
+								<textarea name="caption" class="form-control" id="caption" type="textarea" placeholder="Check out this code snippet!"></textarea>
+							</div>
+
+							<div class="col-md-6">
+								<label class="small mb-4" for="language">Select a language</label>
+								<select id="language" name="language" class="col-md-6 form-select mb-4" name="" id="">
+									<option value="" disabled selected>Select a language</option>
+									{% for language in vars.languages %}
+										<option value="{{language.language}}">{{language.language}}</option>
+									{% endfor %}
+								</select>
+							</div>
+
+
+						</div>
+
+						<input class="btn btn-primary" type="submit" value="Post">
+					</form>
+					{% if session.message is defined %}
+						<div class="mt-5 alert alert-{{session.message.type}}" role="alert">
+							{{ session.message.msg }}
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
